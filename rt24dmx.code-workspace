@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "DMX512-xmit",
+			"path": "DMX512-xmit"
+		},
+		{
+			"name": "DMX512-recv",
+			"path": "DMX512-recv"
+		}
+	],
+	"settings": {}
+}

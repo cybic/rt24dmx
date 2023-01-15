@@ -1,2 +1,2 @@
 # rt24dmx
-Bridge DMX over RT24L01
+Bridge DMX512 over RT24L01
