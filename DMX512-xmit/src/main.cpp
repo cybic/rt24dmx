@@ -48,10 +48,14 @@ static constexpr const uint16_t channels_per_group = 8;
 void printByte(uint8_t b) {
 }
 
+bool retry = false;
 
 void loop() {
-  if (DMXSerial.dataUpdated()) {
+  if (retry || DMXSerial.dataUpdated()) {
     DMXSerial.resetUpdated();
+
+    // Clear dirty flag
+    retry = false;
 
     //uint8_t *buf = (uint8_t *)DMXSerial.getBuffer();
 
@@ -79,8 +83,12 @@ void loop() {
         frame.address = i;
         frame.value = dmxbuf[i];
 
-        radio.write(&frame, sizeof(frame));
-        buffer[i] = dmxbuf[i];
+        if (radio.write(&frame, sizeof(frame))) {
+          // Bookeep if frame is ack'ed
+          buffer[i] = dmxbuf[i];
+        } else {
+          retry = true;
+        }
         //dirty = true;
       }
     }
